@@ -1,7 +1,15 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import { StyleSheet, Text, View, FlatList, TouchableOpacity } from 'react-native'
+import { pink, nearBlack, white, orange, grey, paper } from '../utils/colors'
 
-export default class DeckList extends Component {
+function mapStateToProps(state) {
+  return {
+    deckList: Object.values(state).map(e => { e.key = e.title; return e })
+  }
+}
+
+class DeckList extends Component {
 
   _renderItem = ({ item }) =>
     (<TouchableOpacity
@@ -11,26 +19,16 @@ export default class DeckList extends Component {
       )}
 
     ><View style={styles.item}>
-        <Text style={{ textAlign: 'center' }}>{item.key}</Text>
-        <Text style={{ textAlign: 'center' }}>{item.questions.length} cards</Text>
+        <Text style={[styles.itemText, styles.itemTitle]}>{item.key}</Text>
+        <Text style={styles.itemText}>{item.questions.length} cards</Text>
       </View>
     </TouchableOpacity>)
 
   render() {
-    data = [
-      { key: 'Hello1', questions: [1, 2, 3] },
-      { key: 'Hello2', questions: [1] },
-      { key: 'Hello3', questions: [] },
-      { key: 'Hello4', questions: [1, 2, 3, 4, 5, 6] },
-      { key: 'Hello5', questions: [1, 2, 3] },
-      { key: 'Hello6', questions: [1] },
-      { key: 'Hello7', questions: [] },
-      { key: 'Hello8', questions: [1, 2, 3, 4, 5, 6] },
-    ]
     return (
       <View style={styles.deckList}>
         <FlatList
-          data={data}
+          data={this.props.deckList}
           renderItem={this._renderItem}
         />
       </View>
@@ -39,20 +37,29 @@ export default class DeckList extends Component {
 
 }
 
+export default connect(mapStateToProps)(DeckList)
+
 const styles = StyleSheet.create({
   deckList: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: white,
     alignItems: 'stretch',
     justifyContent: 'center',
   },
   item: {
     flex: 1,
-    backgroundColor: '#ddd',
+    backgroundColor: white,
     alignSelf: 'stretch',
     justifyContent: 'center',
     height: 100,
     borderColor: '#888',
     borderBottomWidth: 1
   },
+  itemText: {
+    textAlign: 'center',
+    color: nearBlack
+  },
+  itemTitle: {
+    fontSize: 25
+  }
 });

@@ -1,0 +1,7 @@
+export const pink = '#fe3562'
+export const lightPink = '#fe93aa'
+export const nearBlack = '#433d3e'
+export const grey = '#d0cfcf'
+export const white = '#ffffff'
+export const orange = '#f28d1e'
+export const paper = '#d9d1cb'

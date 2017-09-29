@@ -3,10 +3,14 @@ import { StyleSheet, Text, View, Platform, StatusBar } from 'react-native'
 import { TabNavigator, StackNavigator } from 'react-navigation'
 import { FontAwesome, Ionicons } from '@expo/vector-icons'
 import { Constants } from 'expo'
+import { createStore } from 'redux'
+import { Provider } from 'react-redux'
 
+import reducer from './reducers'
 import DeckList from './components/DeckList'
 import NewDeck from './components/NewDeck'
 import Deck from './components/Deck'
+import { pink, nearBlack, white, orange, grey, lightPink } from './utils/colors'
 
 
 function UdaciStatusBar({ backgroundColor, ...props }) {
@@ -35,10 +39,14 @@ const Tabs = TabNavigator({
       header: null
     },
     tabBarOptions: {
-      activeTintColor: Platform.OS === 'ios' ? '#ababab' : '#ffffff',
+      activeTintColor: white,
+      inactiveTintColor: lightPink,
+      labelStyle: {
+        fontSize: 25,
+      },
       style: {
         height: 56,
-        backgroundColor: Platform.OS === 'ios' ? '#ababab' : '#ababab',
+        backgroundColor: pink,
         shadowColor: 'rgba(0, 0, 0, 0.24)',
         shadowOffset: {
           width: 0,
@@ -57,9 +65,9 @@ const MainNavigator = StackNavigator({
   Deck: {
     screen: Deck,
     navigationOptions: {
-      headerTintColor: '#fff',
+      headerTintColor: white,
       headerStyle: {
-        backgroundColor: '#333333',
+        backgroundColor: pink,
       }
     }
   }
@@ -69,10 +77,12 @@ const MainNavigator = StackNavigator({
 export default class App extends React.Component {
   render() {
     return (
-      <View style={{ flex: 1 }}>
-        <UdaciStatusBar backgroundColor={'#333333'} barStyle="light-content" />
-        <MainNavigator />
-      </View>
+      <Provider store={createStore(reducer)}>
+        <View style={{ flex: 1 }}>
+          <UdaciStatusBar backgroundColor={pink} barStyle="light-content" />
+          <MainNavigator />
+        </View>
+      </Provider>
     );
   }
 }
@@ -80,7 +90,7 @@ export default class App extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: white,
     alignItems: 'center',
     justifyContent: 'center',
   },
