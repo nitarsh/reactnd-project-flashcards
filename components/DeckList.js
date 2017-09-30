@@ -11,18 +11,25 @@ function mapStateToProps(state) {
 
 class DeckList extends Component {
 
-  _renderItem = ({ item }) =>
-    (<TouchableOpacity
+  componentDidMount() {
+    console.log(this.props.deckList)
+  }
+
+  _renderItem = ({ item }) => {
+    console.log(item)
+    return (<TouchableOpacity
       onPress={() => this.props.navigation.navigate(
         'Deck',
         { title: item.key }
       )}
-
-    ><View style={styles.item}>
+    >
+      <View style={styles.item}>
         <Text style={[styles.itemText, styles.itemTitle]}>{item.key}</Text>
         <Text style={styles.itemText}>{item.questions.length} cards</Text>
       </View>
     </TouchableOpacity>)
+  }
+
 
   render() {
     return (
@@ -57,9 +64,10 @@ const styles = StyleSheet.create({
   },
   itemText: {
     textAlign: 'center',
-    color: nearBlack
+    color: paper
   },
   itemTitle: {
-    fontSize: 25
+    fontSize: 25,
+    color: nearBlack
   }
 });

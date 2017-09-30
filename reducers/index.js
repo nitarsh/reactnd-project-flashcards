@@ -28,8 +28,8 @@ function decks(state = initialDeckState, action) {
             return {
                 ...state,
                 [action.title]: {
-                    ...state[action.title],
-                    title: action.title
+                    title: action.title,
+                    questions: []
                 }
             }
         case ADD_CARD_TO_DECK:

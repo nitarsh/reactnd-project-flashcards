@@ -27,7 +27,7 @@ class Deck extends Component {
                 <TouchableOpacity style={styles.btn}>
                     <Text style={styles.btnText}>Add Card</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.btn}>
+                <TouchableOpacity style={deck.questions.length === 0 ? styles.btnDisabled : styles.btn} disabled={deck.questions.length === 0}>
                     <Text style={styles.btnText}>Start Quiz</Text>
                 </TouchableOpacity>
 
@@ -56,6 +56,12 @@ const styles = StyleSheet.create({
         width: 150,
         height: 50,
         backgroundColor: pink,
+        justifyContent: 'center'
+    },
+    btnDisabled: {
+        width: 150,
+        height: 50,
+        backgroundColor: grey,
         justifyContent: 'center'
     },
     btnText: {
