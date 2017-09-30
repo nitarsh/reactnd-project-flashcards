@@ -11,6 +11,8 @@ import reducer from './reducers'
 import DeckList from './components/DeckList'
 import NewDeck from './components/NewDeck'
 import Deck from './components/Deck'
+import Quiz from './components/Quiz'
+import AddCard from './components/AddCard'
 import { pink, nearBlack, white, orange, grey, lightPink } from './utils/colors'
 
 
@@ -66,14 +68,22 @@ const MainNavigator = StackNavigator({
   },
   Deck: {
     screen: Deck,
+  },
+  Quiz: {
+    screen: Quiz
+  },
+  AddCard: {
+    screen: AddCard
+  }
+},
+  {
     navigationOptions: {
       headerTintColor: white,
       headerStyle: {
         backgroundColor: pink,
       }
     }
-  }
-})
+  })
 
 const logger = store => next => action => {
   console.group(action.type)

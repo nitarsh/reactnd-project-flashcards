@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { StyleSheet, Text, KeyboardAvoidingView, TextInput, TouchableOpacity, Alert } from 'react-native'
+import { StyleSheet, Text, KeyboardAvoidingView, TextInput, TouchableOpacity } from 'react-native'
 import { connect } from 'react-redux'
 import { pink, nearBlack, white, orange, grey, paper } from '../utils/colors'
 import * as Actions from '../actions'

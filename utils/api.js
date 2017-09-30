@@ -23,6 +23,17 @@ export function addDeckWithTitle({ title }) {
     )
 }
 
+export function addQuestionToDeck({ title, question }) {
+    return AsyncStorage.mergeItem(STORAGE_KEY,
+        JSON.stringify({
+            [title]: {
+                title: title,
+                questions: []
+            }
+        })
+    )
+}
+
 // export function removeEntry(key) {
 //     return AsyncStorage.getItem(STORAGE_KEY)
 //         .then((results) => {

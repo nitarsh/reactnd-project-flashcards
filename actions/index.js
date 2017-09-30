@@ -25,3 +25,11 @@ export function addNewDeck(title) {
         );
     };
 }
+
+export function addQuestionToDeck(title, question) {
+    return function (dispatch) {
+        return API.addQuestionToDeck({ title, question }).then(
+            () => dispatch(addCardToDeck(title, question))
+        );
+    };
+}

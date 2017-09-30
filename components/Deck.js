@@ -5,7 +5,8 @@ import { pink, nearBlack, white, orange, grey, paper } from '../utils/colors'
 
 function mapStateToProps(state, { navigation }) {
     return {
-        deck: state[navigation.state.params.title]
+        deck: state[navigation.state.params.title],
+        title: navigation.state.params.title
     }
 }
 
@@ -19,15 +20,26 @@ class Deck extends Component {
     }
 
     render() {
-        const { deck } = this.props
+        const { deck, title } = this.props
         return (
             <View style={styles.deck}>
                 <Text style={[styles.itemText, styles.itemTitle]}>{deck.title}</Text>
                 <Text style={styles.itemText}>{deck.questions.length} cards</Text>
-                <TouchableOpacity style={styles.btn}>
+                <TouchableOpacity
+                    style={styles.btn}
+                    onPress={() => this.props.navigation.navigate(
+                        'AddCard', { title }
+                    )}
+                >
                     <Text style={styles.btnText}>Add Card</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={deck.questions.length === 0 ? styles.btnDisabled : styles.btn} disabled={deck.questions.length === 0}>
+                <TouchableOpacity
+                    style={deck.questions.length === 0 ? styles.btnDisabled : styles.btn}
+                    disabled={deck.questions.length === 0}
+                    onPress={() => this.props.navigation.navigate(
+                        'Quiz', { deck }
+                    )}
+                >
                     <Text style={styles.btnText}>Start Quiz</Text>
                 </TouchableOpacity>
 
