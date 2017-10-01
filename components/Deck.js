@@ -21,6 +21,7 @@ class Deck extends Component {
 
     render() {
         const { deck, title } = this.props
+        const isEmpty = (deck.questions.length === 0)
         return (
             <View style={styles.deck}>
                 <Text style={[styles.itemText, styles.itemTitle]}>{deck.title}</Text>
@@ -34,10 +35,10 @@ class Deck extends Component {
                     <Text style={styles.btnText}>Add Card</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                    style={deck.questions.length === 0 ? styles.btnDisabled : styles.btn}
-                    disabled={deck.questions.length === 0}
+                    style={[styles.btn, isEmpty ? styles.btnDisabled : {}]}
+                    disabled={isEmpty}
                     onPress={() => this.props.navigation.navigate(
-                        'Quiz', { deck }
+                        'Quiz', { title }
                     )}
                 >
                     <Text style={styles.btnText}>Start Quiz</Text>
@@ -54,12 +55,12 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: white,
         alignItems: 'center',
-        justifyContent: 'space-around',
-        height: 300
+        justifyContent: 'center'
     },
     itemText: {
         textAlign: 'center',
-        color: nearBlack
+        color: nearBlack,
+        marginBottom: 20
     },
     itemTitle: {
         fontSize: 25
@@ -68,13 +69,12 @@ const styles = StyleSheet.create({
         width: 150,
         height: 50,
         backgroundColor: pink,
-        justifyContent: 'center'
+        justifyContent: 'center',
+        marginTop: 20,
+        marginBottom: 20
     },
     btnDisabled: {
-        width: 150,
-        height: 50,
-        backgroundColor: grey,
-        justifyContent: 'center'
+        backgroundColor: grey
     },
     btnText: {
         textAlign: 'center',
