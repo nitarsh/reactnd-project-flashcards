@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { StyleSheet, Text, View, KeyboardAvoidingView, TextInput, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View, KeyboardAvoidingView, TextInput, TouchableOpacity, Keyboard } from 'react-native'
 import { pink, nearBlack, white, orange, grey, paper } from '../utils/colors'
 import * as Actions from '../actions'
 
@@ -9,13 +9,17 @@ class AddCard extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { question: 'sdfdsf', answer: '' };
+        this.state = { question: '', answer: '' };
     }
 
     onSubmit = () => {
-        const { title, addQuestionToDeck } = this.props
+        const { title, addQuestionToDeck, goBack } = this.props
         const { question, answer } = this.state
+        console.log('hello12')
+        console.log(title)
         addQuestionToDeck(title, { question, answer })
+        Keyboard.dismiss()
+        goBack()
     }
 
     render() {
@@ -23,11 +27,13 @@ class AddCard extends Component {
             <KeyboardAvoidingView
                 behavior="padding"
                 style={styles.newDeck}>
+                <Text style={styles.itemText}>Question</Text>
                 <TextInput
                     style={styles.textInput}
                     onChangeText={(question) => this.setState({ question })}
                     value={this.state.question}
                 />
+                <Text style={styles.itemText}>Answer</Text>
                 <TextInput
                     style={styles.textInput}
                     onChangeText={(answer) => this.setState({ answer })}
@@ -50,15 +56,21 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: white,
         alignItems: 'center',
-        justifyContent: 'space-around',
+        justifyContent: 'center',
         height: 300
+    },
+    itemText: {
+        textAlign: 'center',
+        color: nearBlack,
+        marginBottom:10
     },
     textInput: {
         height: 40,
         borderColor: grey,
         borderWidth: 1,
         margin: 5,
-        width: 150
+        width: 250,
+        marginBottom: 30
     },
     btn: {
         width: 150,
@@ -73,11 +85,18 @@ const styles = StyleSheet.create({
     }
 });
 
-
-function mapDispatchToProps(dispatch) {
+function mapStateToProps(state, { navigation }) {
     return {
-        addQuestionToDeck: (title, question) => dispatch(Actions.addQuestionToDeck(title, question))
+        title: navigation.state.params.title
     }
 }
 
-export default connect(() => { return {} }, mapDispatchToProps)(AddCard)
+
+function mapDispatchToProps(dispatch, { navigation }) {
+    return {
+        addQuestionToDeck: (title, question) => dispatch(Actions.addQuestionToDeck(title, question)),
+        goBack: () => navigation.goBack()
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddCard)

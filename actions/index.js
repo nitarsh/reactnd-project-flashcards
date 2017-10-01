@@ -1,10 +1,14 @@
 import * as API from '../utils/api'
 
-// export const GET_DECKS = 'GET_DECKS'
-// export const GET_DECK = 'GET_DECK'
+export const SET_DECKS = 'SET_DECKS'
 export const SAVE_DECK_TITLE = 'SAVE_DECK_TITLE'
 export const ADD_CARD_TO_DECK = 'ADD_CARD_TO_DECK'
 
+export function saveDecks(decks) {
+    return {
+        type: SET_DECKS, decks
+    }
+}
 
 export function saveDeckTitle(title) {
     return {
@@ -18,18 +22,37 @@ export function addCardToDeck(title, card) {
     }
 }
 
+export function fetchDecks() {
+    return function (dispatch) {
+        return API.fetchDecks().then(
+            (decks) => {
+                console.log('Fetched decks:');
+                console.log(decks);
+                decks = decks ? JSON.parse(decks) : {}
+                return dispatch(saveDecks(decks))
+            }
+        )
+    }
+}
+
 export function addNewDeck(title) {
     return function (dispatch) {
-        return API.addDeckWithTitle({ title }).then(
-            () => dispatch(saveDeckTitle(title))
-        );
+        API.addDeckWithTitle({ title })
+        return dispatch(saveDeckTitle(title))
+
     };
 }
 
 export function addQuestionToDeck(title, question) {
     return function (dispatch) {
-        return API.addQuestionToDeck({ title, question }).then(
-            () => dispatch(addCardToDeck(title, question))
-        );
+        return API.fetchDecks().then(
+            (decks) => {
+                deck = JSON.parse(decks)[title]
+                questions = deck.questions.concat(question)
+                return API.setQuestionsToDeck({title, questions}).then(
+                    () => dispatch(addCardToDeck(title, question))
+                )
+            }
+        )
     };
 }

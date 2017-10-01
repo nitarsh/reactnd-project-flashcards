@@ -50,14 +50,7 @@ const Tabs = TabNavigator({
       indicatorStyle: { backgroundColor: white, },
       style: {
         height: 56,
-        backgroundColor: pink,
-        shadowColor: 'rgba(0, 0, 0, 0.24)',
-        shadowOffset: {
-          width: 0,
-          height: 3
-        },
-        shadowRadius: 6,
-        shadowOpacity: 1
+        backgroundColor: pink
       }
     }
   })

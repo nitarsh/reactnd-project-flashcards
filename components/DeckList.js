@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { StyleSheet, Text, View, FlatList, TouchableOpacity } from 'react-native'
 import { pink, nearBlack, white, orange, grey, paper } from '../utils/colors'
+import * as Actions from '../actions'
+import * as API from '../utils/api'
 
 function mapStateToProps(state) {
   return {
@@ -12,7 +14,7 @@ function mapStateToProps(state) {
 class DeckList extends Component {
 
   componentDidMount() {
-    console.log(this.props.deckList)
+    this.props.fetchDecks()
   }
 
   _renderItem = ({ item }) => {
@@ -44,7 +46,13 @@ class DeckList extends Component {
 
 }
 
-export default connect(mapStateToProps)(DeckList)
+function mapDispatchToProps(dispatch) {
+  return {
+    fetchDecks: () => dispatch(Actions.fetchDecks())
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(DeckList)
 
 const styles = StyleSheet.create({
   deckList: {

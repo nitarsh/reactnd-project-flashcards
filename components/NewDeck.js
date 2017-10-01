@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { StyleSheet, Text, KeyboardAvoidingView, TextInput, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, KeyboardAvoidingView, TextInput, TouchableOpacity, Keyboard } from 'react-native'
 import { connect } from 'react-redux'
 import { pink, nearBlack, white, orange, grey, paper } from '../utils/colors'
 import * as Actions from '../actions'
@@ -8,12 +8,14 @@ class NewDeck extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { text: 'sdfdsf' };
+        this.state = { text: '' };
     }
 
     onSubmit = () => {
-        const {addNewDeck} = this.props
+        const { addNewDeck, goBack } = this.props
         addNewDeck(this.state.text)
+        Keyboard.dismiss()
+        goBack()
     }
 
     render() {
@@ -44,19 +46,21 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: white,
         alignItems: 'center',
-        justifyContent: 'space-around',
+        justifyContent: 'center',
         height: 300
     },
     itemText: {
         textAlign: 'center',
-        color: nearBlack
+        color: nearBlack,
+        marginBottom:50
     },
     textInput: {
         height: 40,
         borderColor: grey,
         borderWidth: 1,
         margin: 5,
-        width: 150
+        width: 150,
+        marginBottom:10
     },
     btn: {
         width: 150,
@@ -71,9 +75,10 @@ const styles = StyleSheet.create({
     }
 });
 
-function mapDispatchToProps(dispatch) {
+function mapDispatchToProps(dispatch, { navigation }) {
     return {
-        addNewDeck: (title) => dispatch(Actions.addNewDeck(title))
+        addNewDeck: (title) => dispatch(Actions.addNewDeck(title)),
+        goBack: () => navigation.goBack()
     }
 }
 
