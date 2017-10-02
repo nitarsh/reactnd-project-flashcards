@@ -26,8 +26,6 @@ export function fetchDecks() {
     return function (dispatch) {
         return API.fetchDecks().then(
             (decks) => {
-                console.log('Fetched decks:');
-                console.log(decks);
                 decks = decks ? JSON.parse(decks) : {}
                 return dispatch(saveDecks(decks))
             }
