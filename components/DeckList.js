@@ -17,9 +17,8 @@ class DeckList extends Component {
     this.props.fetchDecks()
   }
 
-  _renderItem = ({ item }) => {
-    console.log(item)
-    return (<TouchableOpacity
+  _renderItem = ({ item }) => (
+    <TouchableOpacity
       onPress={() => this.props.navigation.navigate(
         'Deck',
         { title: item.key }
@@ -30,7 +29,7 @@ class DeckList extends Component {
         <Text style={styles.itemText}>{item.questions.length} cards</Text>
       </View>
     </TouchableOpacity>)
-  }
+
 
 
   render() {

@@ -14,6 +14,7 @@ import Deck from './components/Deck'
 import Quiz from './components/Quiz'
 import AddCard from './components/AddCard'
 import { pink, nearBlack, white, orange, grey, lightPink } from './utils/colors'
+import { setLocalNotification } from './utils/notifications'
 
 
 function UdaciStatusBar({ backgroundColor, ...props }) {
@@ -92,6 +93,11 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 const store = createStore(reducer, composeEnhancers(applyMiddleware(thunk, logger)))
 
 export default class App extends React.Component {
+
+  componentDidMount() {
+    setLocalNotification()
+  }
+
   render() {
     return (
       <Provider store={store}>

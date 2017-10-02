@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 import { connect } from 'react-redux'
 import { pink, nearBlack, white, orange, grey, paper } from '../utils/colors'
+import { clearLocalNotification, setLocalNotification } from '../utils/notifications'
 
 function QuestionsAndAnswers({ card, markCorrect, markIncorrect, isQuestion, toggleQuestion }) {
     const { question, answer } = card
@@ -72,7 +73,11 @@ class Quiz extends Component {
         this.setState((prevState) => ({
             qnNumber: prevState.qnNumber + 1,
             isQuestion: true
-        }))
+        }), () => {
+            if (this.state.qnNumber === this.props.deck.questions.length)
+                clearLocalNotification().then(setLocalNotification)
+        })
+
     }
 
     markIncorrect = () => {

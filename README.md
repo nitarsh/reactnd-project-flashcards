@@ -9,4 +9,3 @@
 ## Phones/Platforms tested on
 This app was tested on the following phones and platforms:
 * Iphone 6 (Running iOS 11.0.0)
-* Redmi Note 3 (Running Android 6.0.1)
