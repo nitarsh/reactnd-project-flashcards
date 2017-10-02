@@ -7,15 +7,21 @@ import * as Actions from '../actions'
 class NewDeck extends Component {
 
     constructor(props) {
-        super(props);
-        this.state = { text: '' };
+        super(props)
+        this.state = { text: '' }
+    }
+
+    goToDeck = (navigation, title) => {
+        navigation.navigate('Deck', { title })
     }
 
     onSubmit = () => {
-        const { addNewDeck, goBack } = this.props
+        const { addNewDeck, navigation } = this.props
+        title = this.state.text
         addNewDeck(this.state.text)
+        this.setState({ text: '' })
         Keyboard.dismiss()
-        goBack()
+        this.goToDeck(navigation, title)
     }
 
     render() {
@@ -52,7 +58,7 @@ const styles = StyleSheet.create({
     itemText: {
         textAlign: 'center',
         color: nearBlack,
-        marginBottom:50
+        marginBottom: 50
     },
     textInput: {
         height: 40,
@@ -60,7 +66,7 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         margin: 5,
         width: 150,
-        marginBottom:10
+        marginBottom: 10
     },
     btn: {
         width: 150,
@@ -75,11 +81,13 @@ const styles = StyleSheet.create({
     }
 });
 
-function mapDispatchToProps(dispatch, { navigation }) {
+function mapDispatchToProps(dispatch) {
     return {
-        addNewDeck: (title) => dispatch(Actions.addNewDeck(title)),
-        goBack: () => navigation.goBack()
+        addNewDeck: (title) => dispatch(Actions.addNewDeck(title))
     }
 }
 
-export default connect(() => { return {} }, mapDispatchToProps)(NewDeck)
+export default connect(
+    (state, { navigation }) => ({ navigation }),
+    mapDispatchToProps
+)(NewDeck)

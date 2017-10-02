@@ -15,8 +15,6 @@ class AddCard extends Component {
     onSubmit = () => {
         const { title, addQuestionToDeck, goBack } = this.props
         const { question, answer } = this.state
-        console.log('hello12')
-        console.log(title)
         addQuestionToDeck(title, { question, answer })
         Keyboard.dismiss()
         goBack()

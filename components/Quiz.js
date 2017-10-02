@@ -34,12 +34,24 @@ function QuestionsAndAnswers({ card, markCorrect, markIncorrect, isQuestion, tog
     )
 }
 
-function Results({ result }) {
+function Results({ result, restartQuiz, backToQuiz }) {
     return (
         <View style={styles.container}>
             <Text style={{ fontSize: 30 }}>
                 Percentage Correct: {result}%
             </Text>
+            <TouchableOpacity
+                style={[styles.btn]}
+                onPress={() => restartQuiz()}
+            >
+                <Text style={styles.btnText}>Restart Quiz</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+                style={[styles.btn]}
+                onPress={() => backToQuiz()}
+            >
+                <Text style={styles.btnText}>Back to Deck</Text>
+            </TouchableOpacity>
         </View>
     )
 }
@@ -48,12 +60,12 @@ class Quiz extends Component {
     static navigationOptions = ({ navigation }) => ({ title: 'Quiz' })
 
     constructor(props) {
-        super(props);
+        super(props)
         this.state = {
             qnNumber: 0,
             numCorrect: 0,
             isQuestion: true
-        };
+        }
     }
 
     changeCard = () => {
@@ -80,8 +92,16 @@ class Quiz extends Component {
         }))
     }
 
+    restartQuiz = () => {
+        this.setState({
+            qnNumber: 0,
+            numCorrect: 0,
+            isQuestion: true
+        })
+    }
+
     render() {
-        const { deck } = this.props
+        const { deck, navigation } = this.props
         const { qnNumber, numCorrect, isQuestion } = this.state
         const isComplete = (qnNumber === deck.questions.length)
         return (
@@ -89,6 +109,8 @@ class Quiz extends Component {
                 {isComplete ?
                     <Results
                         result={Math.round(((numCorrect * 1.0) / deck.questions.length) * 100.0)}
+                        restartQuiz={this.restartQuiz}
+                        backToQuiz={navigation.goBack}
                     /> :
                     <QuestionsAndAnswers
                         card={deck.questions[qnNumber]}
@@ -142,7 +164,8 @@ const styles = StyleSheet.create({
 function mapStateToProps(state, { navigation }) {
     return {
         deck: state[navigation.state.params.title],
-        title: navigation.state.params.title
+        title: navigation.state.params.title,
+        navigation: navigation
     }
 }
 
