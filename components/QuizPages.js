@@ -2,7 +2,7 @@ import React from 'react'
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 import { pink, nearBlack, white, orange, grey, paper } from '../utils/colors'
 
-export default function QuestionsAndAnswers({ card, markCorrect, markIncorrect, isQuestion, toggleQuestion }) {
+export function QuestionsAndAnswers({ card, markCorrect, markIncorrect, isQuestion, toggleQuestion }) {
     const { question, answer } = card
     return (
         <View style={styles.container}>
@@ -33,7 +33,7 @@ export default function QuestionsAndAnswers({ card, markCorrect, markIncorrect, 
     )
 }
 
-export default function Results({ result, restartQuiz, backToQuiz }) {
+export function Results({ result, restartQuiz, backToQuiz }) {
     return (
         <View style={styles.container}>
             <Text style={{ fontSize: 30 }}>
